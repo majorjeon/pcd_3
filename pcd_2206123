@@ -1,0 +1,49 @@
+#dekomposisi R, G, B dari citra berwarna
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Step 1: Load an image (Replace the path with the actual image file path)
+image_path = '/content/drives/MyDrive/download.jpeg'  # Ganti dengan path gambar Anda
+image = cv2.imread(image_path)
+
+# Step 2: Convert the image from BGR (OpenCV default) to RGB
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# Step 3: Split the image into its Red, Green, and Blue channels
+R, G, B = cv2.split(image_rgb)
+
+# Step 4: Create a zero matrix to help in visualization
+zeros = np.zeros(image.shape[:2], dtype="uint8")
+
+# Step 5: Visualize the R, G, B channels separately
+plt.figure(figsize=(10, 10))
+
+# Red channel
+plt.subplot(2, 2, 1)
+red_image = cv2.merge([R, zeros, zeros])  # R channel with G, B as 0
+plt.imshow(red_image)
+plt.title('Red Channel')
+plt.axis('off')
+
+# Green channel
+plt.subplot(2, 2, 2)
+green_image = cv2.merge([zeros, G, zeros])  # G channel with R, B as 0
+plt.imshow(green_image)
+plt.title('Green Channel')
+plt.axis('off')
+
+# Blue channel
+plt.subplot(2, 2, 3)
+blue_image = cv2.merge([zeros, zeros, B])  # B channel with R, G as 0
+plt.imshow(blue_image)
+plt.title('Blue Channel')
+plt.axis('off')
+
+# Original image for comparison
+plt.subplot(2, 2, 4)
+plt.imshow(image_rgb)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.show()
